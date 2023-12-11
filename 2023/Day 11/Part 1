@@ -1,0 +1,80 @@
+
+import math
+import collections
+
+from queue import Queue
+
+
+path = "input.txt"
+
+s="" 
+try:
+    with open(path) as file:
+        s=(file.read())
+except Exception as e:
+    print(e)
+
+arr=[]
+arr= s.split('\n')
+
+n= len(arr)
+m=len(arr[0])
+
+g= [[0]*m for _ in range(n)]
+
+for i in range(n):
+    for j in range(m):
+        g[i][j]= arr[i][j]
+
+pre_r= [0]*n
+
+pre_c= [0]*m
+
+for i in range(n):
+    flag=0
+    for j in range(m):
+        if(arr[i][j]=='#'):
+            flag=1
+
+    pre_r[i]= (pre_r[i-1] if (i>0) else 0)+ (0 if flag else 1)
+
+
+for i in range(m):
+    flag=0
+    for j in range(n):
+        if(arr[j][i]=='#'):
+            flag=1
+
+    pre_c[i]= (pre_c[i-1] if (i>0) else 0)+ (0 if flag else 1)
+
+
+
+l=[]
+
+for i in range(n):
+    for j in range(m):
+        if(arr[i][j]=='#'):
+            l.append((i,j))
+
+
+ans=[]
+
+for i in range(len(l)):
+    for j in range(i+1, len(l)):
+        (x1, y1)= l[i]
+        (x2, y2)= l[j]
+        cols= abs(pre_c[y2]- (pre_c[y1-1] if y1>0 else 0))
+        rows= abs(pre_r[x2] - (pre_r[x1-1] if x1>0 else 0))
+
+        dis= (max(x1,x2)- min(x1, x2)) + (max(y1, y2)- min(y1, y2))
+
+        dis+= ((rows+cols))
+
+        ans.append(dis)
+
+
+print(sum(ans))
+
+
+
+
