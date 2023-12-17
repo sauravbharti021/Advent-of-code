@@ -34,14 +34,12 @@ dic[((0,0), 'W')]= (int(arr[0][0]))
 q.append(((0,0), 'S'))
 dic[((0,0), 'S')]= (int(arr[0][0])) 
 
-print(st, dic, q)
 
 
 while(len(q)>0):
 
     ((x,y), d)= q.popleft()
 
-    # print("now", ((x,y), d))
     if(d=='N' or d=='S'):
         sum1=0
         sum2=0
